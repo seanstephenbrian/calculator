@@ -1,16 +1,55 @@
-const header = document.querySelector('.header-text');
-header.textContent = 'calc';
-header.classList.add('calc');
-header.addEventListener('mouseover', () => {
-    header.textContent = 'CALCULATE:::';
-    header.classList.remove('calc');
-    header.classList.add('calculate');
+const headerText = document.querySelector('.header-text');
+headerText.textContent = 'calc';
+headerText.classList.add('calc');
+headerText.addEventListener('mouseover', () => {
+    headerText.textContent = 'CALCULATE:::';
+    headerText.classList.remove('calc');
+    headerText.classList.add('calculate');
 });
-header.addEventListener('mouseout', () => {
-    header.textContent = 'calc';
-    header.classList.remove('calculate');
-    header.classList.add('calc');
+headerText.addEventListener('mouseout', () => {
+    headerText.textContent = 'calc';
+    headerText.classList.remove('calculate');
+    headerText.classList.add('calc');
 });
+
+const headerImg = document.querySelector('#header-img');
+headerImg.setAttribute('src','img/calc.png');
+headerImg.addEventListener('mouseover', () => {
+    headerImg.removeAttribute('src','img/calc.png');
+    headerImg.setAttribute('src','img/skull.png');
+});
+headerImg.addEventListener('mouseout', () => {
+    headerImg.removeAttribute('src','img/skull.png');
+    headerImg.setAttribute('src','img/calc.png');
+});
+
+const numbers = document.querySelectorAll('.number');
+numbers.forEach(number => {
+    number.addEventListener('mouseover', () => {
+        number.classList.add('hover');
+    });
+    number.addEventListener('mouseout', () => {
+        number.classList.remove('hover');
+    });
+    number.addEventListener('click', () => {
+        alert('number listener works');
+    });
+});
+
+const operators = document.querySelectorAll('.operator');
+operators.forEach(operator => {
+    operator.addEventListener('mouseover', () => {
+        operator.classList.add('hover');
+    });
+    operator.addEventListener('mouseout', () => {
+        operator.classList.remove('hover');
+    });
+    operator.addEventListener('click', () => {
+        alert('operator listener works');
+    });
+});
+
+
 
 function add(x, y) {
     return x + y;

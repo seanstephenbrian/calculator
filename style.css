@@ -4,20 +4,44 @@ html {
 }
 
 body {
+    width: 100vw;
     display: flex;
     flex-direction: column;
     wrap: wrap;
-    height: 100vh;
-    gap: 10vh;
+    max-height: 100vh;
 }
 
 .header {
     flex: auto;
+    gap: 50px;
     height: 15vh;
     margin-top: 5vh;
-    margin-left: 30vw;
-    margin-right: 20vw;
+    margin-bottom: 50px;
     overflow-wrap: break-word;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.header-text {
+    max-width: 40vw;
+    flex: auto;
+    margin-left: 10vw;
+}
+
+.header-img {
+    max-width: 10vw;
+    flex: auto;
+    display: flex;
+    margin-right: 20vw;
+}
+
+.header-img img {
+    flex: auto;
+    min-width: none;
+    min-height: none;
+    height: 15vh;
 }
 
 .calc {
@@ -25,16 +49,38 @@ body {
 }
 
 .calculate {
-    font-size: 6em;
+    font-size: 4em;
     font-family: Helvetica, sans-serif;
     color: red;
 }
 
+.calc , .calculate {
+    animation: blink-animation 1s steps(5, start) infinite;
+    -webkit-animation: blink-animation 1s steps(5, start) infinite;
+}
+
+@keyframes blink-animation {
+    to {
+        visibility: hidden;
+    }
+}
+@-webkit-keyframes blink-animation {
+    to {
+        visibility: hidden;
+    }
+}
+
+.display {
+    display: flex;
+}
+
 .display-field {
-    width: 40vw;
+    flex: auto;
+    max-width: 40vw;
     min-width: 300px;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 30px;
     font-size: 4em;
     font-family: 'Courier New', Courier, monospace;
     text-align: right;
@@ -45,35 +91,50 @@ body {
 
 .input {
     display: flex;
+    flex: auto;
+    min-height: fit-content;
     gap: 10vw;
     font-size: 4em;
+    margin-bottom: 30px;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .numbers {
-    margin-left: auto;
     display: grid;
     grid-template-columns: auto auto auto;
     column-gap: 1em;
     row-gap: 0.5em;
 }
 
-.numbers div {
+.number {
     text-align: center;
 }
 
+.number.hover {
+    font-size: 4em;
+    text-shadow: 0px -25vh red;
+}
+
 .operators {
-    margin-right: auto;
     font-family: Helvetica, sans-serif;
     display: grid;
     grid-template-columns: auto;
     text-align: center;
 }
 
-.operators .med {
+.operator {
     font-weight: 100;
 }
 
-.operators .heavy {
+.operator.hover {
+    font-size: 4em;
+    text-shadow: -25vw 0 #20C20E;
+}
+
+
+#equals {
     font-weight: 900;
 }
 
