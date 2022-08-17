@@ -49,12 +49,16 @@ numbers.forEach(number => {
             firstClick = true;
             displayField.textContent = clickedNumber;
         }
-        if ( ( (storedValue) && (parseFloat(displayField.textContent) === storedValue) ) || (!(storedValue) && (displayField.textContent) && (firstClick) ) ) {
+        if ( ( (storedValue) && (parseFloat(displayField.textContent) === storedValue) ) || ( (!storedValue) && (displayField.textContent) && (firstClick) ) ) {
             firstClick = false;
             displayField.textContent = '';
             displayField.textContent = clickedNumber;
         }
-        else {
+        else if (clickedOperator === '=') {
+            clickedOperator = '';
+            displayField.textContent = '';
+            displayField.textContent = clickedNumber;
+        } else {
             displayField.textContent += clickedNumber;
         }
     });
