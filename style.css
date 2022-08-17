@@ -112,10 +112,9 @@ body {
     text-align: center;
 }
 
-.number.hover {
-    font-size: 4em;
+/* .number.hover {
     text-shadow: 0px -25vh red;
-}
+} */
 
 .operators {
     font-family: Helvetica, sans-serif;
@@ -128,10 +127,9 @@ body {
     font-weight: 100;
 }
 
-.operator.hover {
-    font-size: 4em;
+/* .operator.hover {
     text-shadow: -25vw 0 #20C20E;
-}
+} */
 
 
 #equals {

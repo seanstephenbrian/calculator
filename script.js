@@ -30,6 +30,7 @@ let chosenOperator;
 let storedValue;
 let displayValue;
 let clickedOperator;
+let firstClick = false;
 
 const numbers = document.querySelectorAll('.number');
 numbers.forEach(number => {
@@ -44,10 +45,12 @@ numbers.forEach(number => {
         let clickedNumber = document.querySelector('.clicked').textContent;
         number.classList.remove('clicked');
         let previousValue = displayField.textContent;
-        if (previousValue === '0') {
-            displayField.textContent = '';
+        if (previousValue === '0' && !(storedValue)) {
+            firstClick = true;
+            displayField.textContent = clickedNumber;
         }
-        if ( (storedValue && parseInt(displayField.textContent) === storedValue) || (!(storedValue) && displayField.textContent) ) {
+        if ( ( (storedValue) && (parseFloat(displayField.textContent) === storedValue) ) || (!(storedValue) && (displayField.textContent) && (firstClick) ) ) {
+            firstClick = false;
             displayField.textContent = '';
             displayField.textContent = clickedNumber;
         }
@@ -71,43 +74,43 @@ operators.forEach(operator => {
         operator.classList.remove('clicked');
         if (!storedValue) {
             if (clickedOperator === '+') {
-                storedValue = parseInt(displayField.textContent);
+                storedValue = parseFloat(displayField.textContent);
                 chosenOperator = add;
             } else if (clickedOperator === '-') {
-                storedValue = parseInt(displayField.textContent);
+                storedValue = parseFloat(displayField.textContent);
                 chosenOperator = subtract;
             } else if (clickedOperator === 'x') {
-                storedValue = parseInt(displayField.textContent);
+                storedValue = parseFloat(displayField.textContent);
                 chosenOperator = multiply;
             } else if (clickedOperator === '÷') {
-                storedValue = parseInt(displayField.textContent);
+                storedValue = parseFloat(displayField.textContent);
                 chosenOperator = divide;
             }
         } else if (storedValue) {
             if (clickedOperator === '+') {
-                displayValue = parseInt(displayField.textContent);
+                displayValue = parseFloat(displayField.textContent);
                 displayField.textContent = operate(chosenOperator,displayValue,storedValue);
-                storedValue = parseInt(displayField.textContent);
+                storedValue = parseFloat(displayField.textContent);
                 chosenOperator = add;
             } else if (clickedOperator === '-') {
-                displayValue = parseInt(displayField.textContent);
+                displayValue = parseFloat(displayField.textContent);
                 displayField.textContent = operate(chosenOperator,displayValue,storedValue);
-                storedValue = parseInt(displayField.textContent);
+                storedValue = parseFloat(displayField.textContent);
                 chosenOperator = subtract;
             } else if (clickedOperator === 'x') {
-                displayValue = parseInt(displayField.textContent);
+                displayValue = parseFloat(displayField.textContent);
                 displayField.textContent = operate(chosenOperator,displayValue,storedValue);
-                storedValue = parseInt(displayField.textContent);
+                storedValue = parseFloat(displayField.textContent);
                 chosenOperator = multiply;
             } else if (clickedOperator === '÷') {
-                displayValue = parseInt(displayField.textContent);
+                displayValue = parseFloat(displayField.textContent);
                 displayField.textContent = operate(chosenOperator,displayValue,storedValue);
-                storedValue = parseInt(displayField.textContent);
+                storedValue = parseFloat(displayField.textContent);
                 chosenOperator = divide;
             }
         }
         if (clickedOperator === '=') {
-            displayValue = parseInt(displayField.textContent);
+            displayValue = parseFloat(displayField.textContent);
             displayField.textContent = operate(chosenOperator,displayValue,storedValue);
             storedValue = '';
         }
@@ -116,19 +119,19 @@ operators.forEach(operator => {
 
 
 function add(x, y) {
-    return x + y;
+    return y + x;
 }
 
 function subtract(x, y) {
-    return x - y;
+    return y - x;
 }
 
 function multiply(x, y) {
-    return x * y;
+    return y * x;
 }
 
 function divide(x, y) {
-    return x / y;
+    return y / x;
 }
 
 function operate(operator, x, y) {
