@@ -55,6 +55,9 @@ operators.forEach(operator => {
         operator.classList.remove('hover');
     });
     operator.addEventListener('click', () => {
+        operator.classList.add('clicked');
+        let clickedOperator = document.querySelector('.clicked').textContent;
+        operator.classList.remove('clicked');
     });
 });
 
