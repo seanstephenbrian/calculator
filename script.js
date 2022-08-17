@@ -23,6 +23,9 @@ headerImg.addEventListener('mouseout', () => {
     headerImg.setAttribute('src','img/calc.png');
 });
 
+const displayField = document.querySelector('.display-field');
+displayField.textContent = 0;
+
 const numbers = document.querySelectorAll('.number');
 numbers.forEach(number => {
     number.addEventListener('mouseover', () => {
@@ -32,7 +35,14 @@ numbers.forEach(number => {
         number.classList.remove('hover');
     });
     number.addEventListener('click', () => {
-        alert('number listener works');
+        number.classList.add('clicked');
+        let clickedNumber = document.querySelector('.clicked').textContent;
+        let previousValue = displayField.textContent;
+        if (previousValue === '0') {
+            displayField.textContent = '';
+        }
+        displayField.textContent += clickedNumber;
+        number.classList.remove('clicked');
     });
 });
 
@@ -45,7 +55,6 @@ operators.forEach(operator => {
         operator.classList.remove('hover');
     });
     operator.addEventListener('click', () => {
-        alert('operator listener works');
     });
 });
 
