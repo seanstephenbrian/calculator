@@ -12,9 +12,10 @@ body {
 }
 
 .header {
+    flex: auto;
     height: 15vh;
     margin-top: 5vh;
-    margin-left: 12vw;
+    margin-left: 30vw;
     margin-right: 20vw;
     overflow-wrap: break-word;
 }
@@ -30,7 +31,8 @@ body {
 }
 
 .display-field {
-    width: 60vw;
+    width: 40vw;
+    min-width: 300px;
     margin-left: auto;
     margin-right: auto;
     font-size: 4em;
@@ -43,28 +45,43 @@ body {
 
 .input {
     display: flex;
+    gap: 10vw;
     font-size: 4em;
 }
 
 .numbers {
     margin-left: auto;
-    margin-right: 10vw;
-    max-height: 30vh;
-    width: 30vw;
     display: grid;
     grid-template-columns: auto auto auto;
     column-gap: 1em;
     row-gap: 0.5em;
 }
 
+.numbers div {
+    text-align: center;
+}
+
 .operators {
     margin-right: auto;
-    max-height: 30vh;
+    font-family: Helvetica, sans-serif;
     display: grid;
     grid-template-columns: auto;
+    text-align: center;
+}
+
+.operators .med {
+    font-weight: 100;
+}
+
+.operators .heavy {
+    font-weight: 900;
 }
 
 .footer {
+    font-family: Helvetica, sans-serif;
+    font-style: italic;
+    font-weight: 200;
+    font-size: small;
     margin-top: auto;
     text-align: center;
 }
