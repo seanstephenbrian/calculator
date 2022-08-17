@@ -30,7 +30,10 @@ let chosenOperator;
 let storedValue;
 let displayValue;
 let clickedOperator;
-let firstClick = false;
+let firstClick = true;
+let clickedEquals = false;
+let lastClick;
+let error = false;
 
 const numbers = document.querySelectorAll('.number');
 numbers.forEach(number => {
@@ -45,16 +48,30 @@ numbers.forEach(number => {
         let clickedNumber = document.querySelector('.clicked').textContent;
         number.classList.remove('clicked');
         let previousValue = displayField.textContent;
+
+        // new attempt:
+
+        // if (firstClick) {
+        //     displayField.textContent = clickedNumber;
+        //     firstClick = false;
+        // } else if (displayField.textContent === '+' || displayField.textContent === '-' || displayField.textContent === 'x' || displayField.textContent === '÷' ) {
+        //     displayField.textContent = '';   
+        //     displayField.textContent += clickedNumber;
+        // } else {
+        //     displayField.textContent += clickedNumber;
+        // }
+
         if (previousValue === '0' && !(storedValue)) {
             firstClick = true;
             displayField.textContent = clickedNumber;
         }
-        if ( ( (storedValue) && (parseFloat(displayField.textContent) === storedValue) ) || ( (!storedValue) && (displayField.textContent) && (firstClick) ) ) {
+        else if ( ( (storedValue) && (parseFloat(displayField.textContent) === storedValue) ) || ( (!storedValue) && (displayField.textContent) && (firstClick) ) ) {
             firstClick = false;
             displayField.textContent = '';
             displayField.textContent = clickedNumber;
         }
         else if (clickedOperator === '=') {
+            clickedEquals = true;
             clickedOperator = '';
             displayField.textContent = '';
             displayField.textContent = clickedNumber;
@@ -76,6 +93,59 @@ operators.forEach(operator => {
         operator.classList.add('clicked');
         clickedOperator = document.querySelector('.clicked').textContent;
         operator.classList.remove('clicked');
+
+
+        //new attempt:
+
+        // if (!lastClick && clickedOperator !== '=') {
+        //     if (clickedOperator === '+') {
+        //         lastClick = '+';
+        //         storedValue = parseFloat(displayField.textContent);
+        //         chosenOperator = add;
+        //     } else if (clickedOperator === '-') {
+        //         lastClick = '-';
+        //         storedValue = parseFloat(displayField.textContent);
+        //         chosenOperator = subtract;
+        //     } else if (clickedOperator === 'x') {
+        //         lastClick = 'x';
+        //         storedValue = parseFloat(displayField.textContent);
+        //         chosenOperator = multiply;
+        //     } else if (clickedOperator === '÷') {
+        //         lastClick = '÷';
+        //         storedValue = parseFloat(displayField.textContent);
+        //         chosenOperator = divide;
+        //     }
+        // } else if (!lastClick && clickedOperator === '=') {
+        //     lastClick = '=';
+        //     storedValue = parseFloat(displayField.textContent);
+        // } else if ( (lastClick === '+' || lastClick === '-' || lastClick === 'x' || lastClick === '÷') && 
+        //             (clickedOperator === '=' || clickedOperator === '+' || clickedOperator === '-' || clickedOperator === 'x' || clickedOperator === '÷') ) {
+        //     displayField.textContent = 'ERROR';
+        //     error = true;
+        // } else {
+        //     if (clickedOperator === '+') {
+        //         lastClick = '+';
+        //         storedValue = parseFloat(displayField.textContent);
+        //         displayField.textContent = '+';
+        //         chosenOperator = add;
+        //     } else if (clickedOperator === '-') {
+        //         lastClick = '-';
+        //         storedValue = parseFloat(displayField.textContent);
+        //         displayField.textContent = '-';
+        //         chosenOperator = subtract;
+        //     } else if (clickedOperator === 'x') {
+        //         lastClick = 'x';
+        //         storedValue = parseFloat(displayField.textContent);
+        //         displayField.textContent = 'x';
+        //         chosenOperator = multiply;
+        //     } else if (clickedOperator === '÷') {
+        //         lastClick = '÷';
+        //         storedValue = parseFloat(displayField.textContent);
+        //         displayField.textContent = '÷';
+        //         chosenOperator = divide;
+        //     }
+        // }
+
         if (!storedValue) {
             if (clickedOperator === '+') {
                 storedValue = parseFloat(displayField.textContent);
@@ -112,12 +182,17 @@ operators.forEach(operator => {
                 storedValue = parseFloat(displayField.textContent);
                 chosenOperator = divide;
             }
-        }
-        if (clickedOperator === '=') {
+        } if (clickedOperator === '=') {
+            if (clickedEquals === true) {
+                chosenOperator = '';
+            } else {
+            clickedEquals = true;
             displayValue = parseFloat(displayField.textContent);
             displayField.textContent = operate(chosenOperator,displayValue,storedValue);
             storedValue = '';
+            }
         }
+
     });
 });
 
