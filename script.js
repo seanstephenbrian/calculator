@@ -26,6 +26,11 @@ headerImg.addEventListener('mouseout', () => {
 const displayField = document.querySelector('.display-field');
 displayField.textContent = 0;
 
+let chosenOperator;
+let storedValue;
+let displayValue;
+let clickedOperator;
+
 const numbers = document.querySelectorAll('.number');
 numbers.forEach(number => {
     number.addEventListener('mouseover', () => {
@@ -37,12 +42,18 @@ numbers.forEach(number => {
     number.addEventListener('click', () => {
         number.classList.add('clicked');
         let clickedNumber = document.querySelector('.clicked').textContent;
+        number.classList.remove('clicked');
         let previousValue = displayField.textContent;
         if (previousValue === '0') {
             displayField.textContent = '';
         }
-        displayField.textContent += clickedNumber;
-        number.classList.remove('clicked');
+        if ( (storedValue && parseInt(displayField.textContent) === storedValue) || (!(storedValue) && displayField.textContent) ) {
+            displayField.textContent = '';
+            displayField.textContent = clickedNumber;
+        }
+        else {
+            displayField.textContent += clickedNumber;
+        }
     });
 });
 
@@ -56,11 +67,52 @@ operators.forEach(operator => {
     });
     operator.addEventListener('click', () => {
         operator.classList.add('clicked');
-        let clickedOperator = document.querySelector('.clicked').textContent;
+        clickedOperator = document.querySelector('.clicked').textContent;
         operator.classList.remove('clicked');
+        if (!storedValue) {
+            if (clickedOperator === '+') {
+                storedValue = parseInt(displayField.textContent);
+                chosenOperator = add;
+            } else if (clickedOperator === '-') {
+                storedValue = parseInt(displayField.textContent);
+                chosenOperator = subtract;
+            } else if (clickedOperator === 'x') {
+                storedValue = parseInt(displayField.textContent);
+                chosenOperator = multiply;
+            } else if (clickedOperator === '÷') {
+                storedValue = parseInt(displayField.textContent);
+                chosenOperator = divide;
+            }
+        } else if (storedValue) {
+            if (clickedOperator === '+') {
+                displayValue = parseInt(displayField.textContent);
+                displayField.textContent = operate(chosenOperator,displayValue,storedValue);
+                storedValue = parseInt(displayField.textContent);
+                chosenOperator = add;
+            } else if (clickedOperator === '-') {
+                displayValue = parseInt(displayField.textContent);
+                displayField.textContent = operate(chosenOperator,displayValue,storedValue);
+                storedValue = parseInt(displayField.textContent);
+                chosenOperator = subtract;
+            } else if (clickedOperator === 'x') {
+                displayValue = parseInt(displayField.textContent);
+                displayField.textContent = operate(chosenOperator,displayValue,storedValue);
+                storedValue = parseInt(displayField.textContent);
+                chosenOperator = multiply;
+            } else if (clickedOperator === '÷') {
+                displayValue = parseInt(displayField.textContent);
+                displayField.textContent = operate(chosenOperator,displayValue,storedValue);
+                storedValue = parseInt(displayField.textContent);
+                chosenOperator = divide;
+            }
+        }
+        if (clickedOperator === '=') {
+            displayValue = parseInt(displayField.textContent);
+            displayField.textContent = operate(chosenOperator,displayValue,storedValue);
+            storedValue = '';
+        }
     });
 });
-
 
 
 function add(x, y) {
