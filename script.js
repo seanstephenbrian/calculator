@@ -54,7 +54,7 @@ numbers.forEach(number => {
         number.classList.remove('clicked');
         
         updateDisplay();
-        // clickedNumber = lastClick;
+
     });
 
 });
@@ -95,6 +95,19 @@ function updateDisplay() {
 
     displayValue = parseFloat(displayField.textContent);
     
+    if (clickedNumber === '0' && lastClicked === divide) {
+        displayField.textContent = 'ERROR';
+        clickedNumber = '';
+        clickedOperator = '';
+        firstClick = true;
+        lastClicked = '';
+        storedValue = '';
+        storedOperator = '';
+        tempValue = '';
+        lastOperator = '';
+        return;
+    }
+
     if (clickedNumber) {
 
         if (!firstClick && typeof parseFloat(lastClicked) === 'number') {
