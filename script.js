@@ -34,6 +34,7 @@ let lastClicked = '';
 let storedValue;
 let storedOperator;
 let tempValue;
+let lastOperator;
 
 const numbers = document.querySelectorAll('.number');
 numbers.forEach(number => {
@@ -106,10 +107,7 @@ function updateDisplay() {
         }
 
         if (lastClicked === add || lastClicked === subtract || lastClicked === multiply || lastClicked === divide) {
-
             storedValue = displayValue;
-
-            console.log({storedValue});
             displayField.textContent = clickedNumber;
         }
 
@@ -127,53 +125,47 @@ function updateDisplay() {
 
         if (clickedOperator !== '=') {
 
+            if (lastClicked === add || lastClicked === subtract || lastClicked === divide || lastClicked === multiply) {
+                storedOperator = clickedOperator;
+                lastClicked = clickedOperator;
+                lastOperator = clickedOperator;
+                clickedOperator = '';
+                return;
+            }
+
             if ( storedOperator && typeof parseFloat(lastClicked) === 'number') {
-                console.log('three triggered');
-    
                 displayField.textContent = operate(storedOperator, storedValue, displayValue);
                 storedOperator = clickedOperator;
+                lastOperator = clickedOperator;
             }
     
             if ( (!lastClicked && !storedOperator) || (lastClicked = 'clear') || (storedOperator && (lastClicked === add || lastClicked === subtract || lastClicked === divide || lastClicked === multiply)) ) {
-                console.log('one triggered');
-    
                 storedOperator = clickedOperator;
+                lastOperator = clickedOperator;
             }
     
-            // if this works it can be combined with the one above it
+            // this can be combined with the one above it
             if (!storedOperator && typeof parseFloat(lastClicked) === 'number') {
-                console.log('two triggered');
-    
                 storedOperator = clickedOperator;
+                lastOperator = clickedOperator;
             }
-    
+
         }
 
         if (clickedOperator === '=') {
 
             if (clickedOperator === '=' && storedOperator && storedValue) {
-                console.log('four triggered');
-    
                 tempValue = parseFloat(displayField.textContent);
-                console.log({storedOperator});
-                console.log({storedValue});
-                console.log({displayValue});
                 displayField.textContent = operate(storedOperator, storedValue, displayValue);
-                storedOperator = '';     
+                storedOperator = '';
+                storedValue = '';     
             }
 
-            if (clickedOperator === '=' && storedOperator && !storedValue) {
-                console.log('TARGET triggered');
-                console.log(tempValue);
-    
+            if (clickedOperator === '=' && ( (storedOperator && !storedValue) || (!storedOperator && !storedValue && lastClicked === '=') ) ) {
                 if (!tempValue) {
                     tempValue = parseFloat(displayField.textContent);
                 }
-                displayField.textContent = operate(storedOperator, tempValue, displayValue);
-            }
-    
-            if (clickedOperator === '=' && !storedOperator && !storedValue) {
-                console.log('nothing happened');
+                displayField.textContent = operate(lastOperator, displayValue, tempValue);
             }
     
         }
