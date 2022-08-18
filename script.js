@@ -28,12 +28,13 @@ displayField.textContent = 0;
 
 let chosenOperator;
 let storedValue;
+let storedOperator;
 let displayValue = displayField.textContent;
 let clickedOperator;
 let clickedNumber;
 let firstClick = true;
 let clickedEquals = false;
-let lastClick;
+let lastClicked = '';
 let error = false;
 
 const numbers = document.querySelectorAll('.number');
@@ -52,16 +53,117 @@ numbers.forEach(number => {
         number.classList.add('clicked');
         clickedNumber = document.querySelector('.clicked').textContent;
         number.classList.remove('clicked');
-        displayValue = displayField.textContent;
-        updateDisplay(clickedNumber, displayValue, storedValue);
-        clickedNumber = lastClick;
+        
+        updateDisplay();
+        // clickedNumber = lastClick;
     });
 
 });
 
-function updateDisplay(clickedNumber, displayValue, storedValue) {
-    if (typeof parseFloat(lastClick) === 'number') {
-        displayField.textContent += clickedNumber;
+const operators = document.querySelectorAll('.operator');
+operators.forEach(operator => {
+
+    operator.addEventListener('mouseover', () => {
+        operator.classList.add('hover');
+    });
+
+    operator.addEventListener('mouseout', () => {
+        operator.classList.remove('hover');
+    });
+
+
+    operator.addEventListener('click', () => {
+
+        operator.classList.add('clicked');
+        clickedOperator = document.querySelector('.clicked').textContent;
+
+        if (clickedOperator === '+') {
+            clickedOperator = add;
+        } else if (clickedOperator === '-') {
+            clickedOperator = subtract;
+        } else if (clickedOperator === 'x') {
+            clickedOperator = multiply;
+        } else if (clickedOperator === '÷') {
+            clickedOperator = divide;
+        }
+        operator.classList.remove('clicked');
+        updateDisplay();
+
+    });
+});
+
+function updateDisplay() {
+
+    displayValue = displayField.textContent;
+    
+    if (clickedNumber) {
+
+        if (!firstClick && typeof parseFloat(lastClicked) === 'number') {
+            displayField.textContent += clickedNumber;
+        }
+
+        if (firstClick) {
+            displayField.textContent = clickedNumber;
+            firstClick = false;
+        }
+
+        if (lastClicked === add || lastClicked === subtract || lastClicked === multiply || lastClicked === divide) {
+            storedValue = displayField.textContent;
+            displayField.textContent = clickedNumber;
+        }
+
+        if (lastClicked === '=') {
+            tempValue = '';
+            displayField.textContent = clickedNumber;
+        }
+
+    lastClicked = clickedNumber;
+    clickedNumber = '';
+
+    }
+
+    if (clickedOperator) {
+
+        if ( (!lastClicked && !storedOperator) || (lastClicked = 'clear') || (storedOperator && (lastClicked === add || lastClicked === subtract || lastClicked === divide || lastClicked === multiply)) ) {
+            storedOperator = clickedOperator;
+            alert('ONE TRIGGERED');
+        }
+
+        // if this works it can be combined with the one above it
+        if (!storedOperator && typeof parseFloat(lastClicked) === 'number') {
+            storedOperator = clickedOperator;
+            alert('TWO TRIGGERED');
+        }
+
+        if (storedOperator && typeof parseFloat(lastClicked) === 'number') {
+            displayField.textContent = operate(storedOperator, storedValue, displayValue);
+            storedOperator = clickedOperator;
+            alert('3 TRIGGERED');
+        }
+
+        if (clickedOperator === '=' && storedOperator && storedValue) {
+            tempValue = displayField.textContent;
+            displayField.textContent = operate(storedOperator, storedValue, displayValue);
+            storedOperator = '';
+            alert('4 TRIGGERED');
+        }
+
+        if (clickedOperator === '=' && storedOperator && !storedValue) {
+            if (!tempValue) {
+                tempValue = displayField.textContent;
+            }
+            displayField.textContent = operate(storedOperator, tempValue, displayValue);
+            alert('5 TRIGGERED');
+        }
+
+        if (clickedOperator === '=' && !storedOperator && !storedValue) {
+            console.log('nothing happened');
+            alert('6 TRIGGERED');
+        }
+
+        lastClicked = clickedOperator;
+        clickedOperator = '';
+
     }
         
 }
@@ -102,19 +204,7 @@ function updateDisplay(clickedNumber, displayValue, storedValue) {
     //});
 //});
 
-const operators = document.querySelectorAll('.operator');
-operators.forEach(operator => {
-    operator.addEventListener('mouseover', () => {
-        operator.classList.add('hover');
-    });
-    operator.addEventListener('mouseout', () => {
-        operator.classList.remove('hover');
-    });
 
-    operator.addEventListener('click', () => {
-        operator.classList.add('clicked');
-        clickedOperator = document.querySelector('.clicked').textContent;
-        operator.classList.remove('clicked');
 
 
         //new attempt:
@@ -216,24 +306,23 @@ operators.forEach(operator => {
         //     }
         // }
 
-    });
-});
+    
 
 
 function add(x, y) {
-    return y + x;
+    return x + y;
 }
 
 function subtract(x, y) {
-    return y - x;
+    return x - y;
 }
 
 function multiply(x, y) {
-    return y * x;
+    return x * y;
 }
 
 function divide(x, y) {
-    return y / x;
+    return x / y;
 }
 
 function operate(operator, x, y) {
