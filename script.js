@@ -94,7 +94,7 @@ operators.forEach(operator => {
 
 function updateDisplay() {
 
-    displayValue = displayField.textContent;
+    displayValue = parseFloat(displayField.textContent);
     
     if (clickedNumber) {
 
@@ -108,7 +108,10 @@ function updateDisplay() {
         }
 
         if (lastClicked === add || lastClicked === subtract || lastClicked === multiply || lastClicked === divide) {
-            storedValue = displayField.textContent;
+
+            storedValue = displayValue;
+
+            console.log({storedValue});
             displayField.textContent = clickedNumber;
         }
 
@@ -124,43 +127,63 @@ function updateDisplay() {
 
     if (clickedOperator) {
 
-        if ( (!lastClicked && !storedOperator) || (lastClicked = 'clear') || (storedOperator && (lastClicked === add || lastClicked === subtract || lastClicked === divide || lastClicked === multiply)) ) {
-            storedOperator = clickedOperator;
-            alert('ONE TRIGGERED');
-        }
+        if (clickedOperator !== '=') {
 
-        // if this works it can be combined with the one above it
-        if (!storedOperator && typeof parseFloat(lastClicked) === 'number') {
-            storedOperator = clickedOperator;
-            alert('TWO TRIGGERED');
-        }
-
-        if (storedOperator && typeof parseFloat(lastClicked) === 'number') {
-            displayField.textContent = operate(storedOperator, storedValue, displayValue);
-            storedOperator = clickedOperator;
-            alert('3 TRIGGERED');
-        }
-
-        if (clickedOperator === '=' && storedOperator && storedValue) {
-            tempValue = displayField.textContent;
-            displayField.textContent = operate(storedOperator, storedValue, displayValue);
-            storedOperator = '';
-            alert('4 TRIGGERED');
-        }
-
-        if (clickedOperator === '=' && storedOperator && !storedValue) {
-            if (!tempValue) {
-                tempValue = displayField.textContent;
+            if ( storedOperator && typeof parseFloat(lastClicked) === 'number') {
+                console.log('three triggered');
+    
+                displayField.textContent = operate(storedOperator, storedValue, displayValue);
+                storedOperator = clickedOperator;
             }
-            displayField.textContent = operate(storedOperator, tempValue, displayValue);
-            alert('5 TRIGGERED');
+    
+            if ( (!lastClicked && !storedOperator) || (lastClicked = 'clear') || (storedOperator && (lastClicked === add || lastClicked === subtract || lastClicked === divide || lastClicked === multiply)) ) {
+                console.log('one triggered');
+    
+                storedOperator = clickedOperator;
+            }
+    
+            // if this works it can be combined with the one above it
+            if (!storedOperator && typeof parseFloat(lastClicked) === 'number') {
+                console.log('two triggered');
+    
+                storedOperator = clickedOperator;
+            }
+    
         }
 
-        if (clickedOperator === '=' && !storedOperator && !storedValue) {
-            console.log('nothing happened');
-            alert('6 TRIGGERED');
+        if (clickedOperator === '=') {
+
+            if (clickedOperator === '=' && storedOperator && storedValue) {
+                console.log('four triggered');
+    
+                tempValue = displayField.textContent;
+                console.log({storedOperator});
+                console.log({storedValue});
+                console.log({displayValue});
+                displayField.textContent = operate(storedOperator, storedValue, displayValue);
+                storedOperator = '';     
+            }
+
+            if (clickedOperator === '=' && storedOperator && !storedValue) {
+                console.log('five triggered');
+    
+                if (!tempValue) {
+                    tempValue = displayField.textContent;
+                }
+                displayField.textContent = operate(storedOperator, tempValue, displayValue);
+            }
+    
+            if (clickedOperator === '=' && !storedOperator && !storedValue) {
+                console.log('nothing happened');
+            }
+    
         }
 
+
+
+        
+
+        
         lastClicked = clickedOperator;
         clickedOperator = '';
 
