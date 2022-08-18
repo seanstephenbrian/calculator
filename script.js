@@ -28,8 +28,9 @@ displayField.textContent = 0;
 
 let chosenOperator;
 let storedValue;
-let displayValue;
+let displayValue = displayField.textContent;
 let clickedOperator;
+let clickedNumber;
 let firstClick = true;
 let clickedEquals = false;
 let lastClick;
@@ -37,17 +38,34 @@ let error = false;
 
 const numbers = document.querySelectorAll('.number');
 numbers.forEach(number => {
+
     number.addEventListener('mouseover', () => {
         number.classList.add('hover');
     });
+
     number.addEventListener('mouseout', () => {
         number.classList.remove('hover');
     });
+
     number.addEventListener('click', () => {
+
         number.classList.add('clicked');
-        let clickedNumber = document.querySelector('.clicked').textContent;
+        clickedNumber = document.querySelector('.clicked').textContent;
         number.classList.remove('clicked');
-        let previousValue = displayField.textContent;
+        displayValue = displayField.textContent;
+        updateDisplay(clickedNumber, displayValue, storedValue);
+        clickedNumber = lastClick;
+    });
+
+});
+
+function updateDisplay(clickedNumber, displayValue, storedValue) {
+    if (typeof parseFloat(lastClick) === 'number') {
+        displayField.textContent += clickedNumber;
+    }
+        
+}
+
 
         // new attempt:
 
@@ -61,25 +79,28 @@ numbers.forEach(number => {
         //     displayField.textContent += clickedNumber;
         // }
 
-        if (previousValue === '0' && !(storedValue)) {
-            firstClick = true;
-            displayField.textContent = clickedNumber;
-        }
-        else if ( ( (storedValue) && (parseFloat(displayField.textContent) === storedValue) ) || ( (!storedValue) && (displayField.textContent) && (firstClick) ) ) {
-            firstClick = false;
-            displayField.textContent = '';
-            displayField.textContent = clickedNumber;
-        }
-        else if (clickedOperator === '=') {
-            clickedEquals = true;
-            clickedOperator = '';
-            displayField.textContent = '';
-            displayField.textContent = clickedNumber;
-        } else {
-            displayField.textContent += clickedNumber;
-        }
-    });
-});
+
+        // first version:
+
+        // if (previousValue === '0' && !(storedValue)) {
+        //     firstClick = true;
+        //     displayField.textContent = clickedNumber;
+        // }
+        // else if ( ( (storedValue) && (parseFloat(displayField.textContent) === storedValue) ) || ( (!storedValue) && (displayField.textContent) && (firstClick) ) ) {
+        //     firstClick = false;
+        //     displayField.textContent = '';
+        //     displayField.textContent = clickedNumber;
+        // }
+        // else if (clickedOperator === '=') {
+        //     clickedEquals = true;
+        //     clickedOperator = '';
+        //     displayField.textContent = '';
+        //     displayField.textContent = clickedNumber;
+        // } else {
+        //     displayField.textContent += clickedNumber;
+        // }
+    //});
+//});
 
 const operators = document.querySelectorAll('.operator');
 operators.forEach(operator => {
@@ -89,6 +110,7 @@ operators.forEach(operator => {
     operator.addEventListener('mouseout', () => {
         operator.classList.remove('hover');
     });
+
     operator.addEventListener('click', () => {
         operator.classList.add('clicked');
         clickedOperator = document.querySelector('.clicked').textContent;
@@ -146,52 +168,53 @@ operators.forEach(operator => {
         //     }
         // }
 
-        if (!storedValue) {
-            if (clickedOperator === '+') {
-                storedValue = parseFloat(displayField.textContent);
-                chosenOperator = add;
-            } else if (clickedOperator === '-') {
-                storedValue = parseFloat(displayField.textContent);
-                chosenOperator = subtract;
-            } else if (clickedOperator === 'x') {
-                storedValue = parseFloat(displayField.textContent);
-                chosenOperator = multiply;
-            } else if (clickedOperator === '÷') {
-                storedValue = parseFloat(displayField.textContent);
-                chosenOperator = divide;
-            }
-        } else if (storedValue) {
-            if (clickedOperator === '+') {
-                displayValue = parseFloat(displayField.textContent);
-                displayField.textContent = operate(chosenOperator,displayValue,storedValue);
-                storedValue = parseFloat(displayField.textContent);
-                chosenOperator = add;
-            } else if (clickedOperator === '-') {
-                displayValue = parseFloat(displayField.textContent);
-                displayField.textContent = operate(chosenOperator,displayValue,storedValue);
-                storedValue = parseFloat(displayField.textContent);
-                chosenOperator = subtract;
-            } else if (clickedOperator === 'x') {
-                displayValue = parseFloat(displayField.textContent);
-                displayField.textContent = operate(chosenOperator,displayValue,storedValue);
-                storedValue = parseFloat(displayField.textContent);
-                chosenOperator = multiply;
-            } else if (clickedOperator === '÷') {
-                displayValue = parseFloat(displayField.textContent);
-                displayField.textContent = operate(chosenOperator,displayValue,storedValue);
-                storedValue = parseFloat(displayField.textContent);
-                chosenOperator = divide;
-            }
-        } if (clickedOperator === '=') {
-            if (clickedEquals === true) {
-                chosenOperator = '';
-            } else {
-            clickedEquals = true;
-            displayValue = parseFloat(displayField.textContent);
-            displayField.textContent = operate(chosenOperator,displayValue,storedValue);
-            storedValue = '';
-            }
-        }
+        // first version:
+        // if (!storedValue) {
+        //     if (clickedOperator === '+') {
+        //         storedValue = parseFloat(displayField.textContent);
+        //         chosenOperator = add;
+        //     } else if (clickedOperator === '-') {
+        //         storedValue = parseFloat(displayField.textContent);
+        //         chosenOperator = subtract;
+        //     } else if (clickedOperator === 'x') {
+        //         storedValue = parseFloat(displayField.textContent);
+        //         chosenOperator = multiply;
+        //     } else if (clickedOperator === '÷') {
+        //         storedValue = parseFloat(displayField.textContent);
+        //         chosenOperator = divide;
+        //     }
+        // } else if (storedValue) {
+        //     if (clickedOperator === '+') {
+        //         displayValue = parseFloat(displayField.textContent);
+        //         displayField.textContent = operate(chosenOperator,displayValue,storedValue);
+        //         storedValue = parseFloat(displayField.textContent);
+        //         chosenOperator = add;
+        //     } else if (clickedOperator === '-') {
+        //         displayValue = parseFloat(displayField.textContent);
+        //         displayField.textContent = operate(chosenOperator,displayValue,storedValue);
+        //         storedValue = parseFloat(displayField.textContent);
+        //         chosenOperator = subtract;
+        //     } else if (clickedOperator === 'x') {
+        //         displayValue = parseFloat(displayField.textContent);
+        //         displayField.textContent = operate(chosenOperator,displayValue,storedValue);
+        //         storedValue = parseFloat(displayField.textContent);
+        //         chosenOperator = multiply;
+        //     } else if (clickedOperator === '÷') {
+        //         displayValue = parseFloat(displayField.textContent);
+        //         displayField.textContent = operate(chosenOperator,displayValue,storedValue);
+        //         storedValue = parseFloat(displayField.textContent);
+        //         chosenOperator = divide;
+        //     }
+        // } if (clickedOperator === '=') {
+        //     if (clickedEquals === true) {
+        //         chosenOperator = '';
+        //     } else {
+        //     clickedEquals = true;
+        //     displayValue = parseFloat(displayField.textContent);
+        //     displayField.textContent = operate(chosenOperator,displayValue,storedValue);
+        //     storedValue = '';
+        //     }
+        // }
 
     });
 });
