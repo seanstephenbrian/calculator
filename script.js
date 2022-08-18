@@ -24,7 +24,7 @@ headerImg.addEventListener('mouseout', () => {
 });
 
 const displayField = document.querySelector('.display-field');
-displayField.textContent = 0;
+displayField.textContent = 666;
 
 let clickedNumber;
 let clickedOperator;
