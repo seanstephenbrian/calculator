@@ -26,6 +26,15 @@ headerImg.addEventListener('mouseout', () => {
 const displayField = document.querySelector('.display-field');
 displayField.textContent = 666;
 
+let clickedClear;
+
+const clearCalc = document.querySelector('.clear-calc');
+clearCalc.addEventListener('click', () => {
+    clickedClear = true;
+    updateDisplay();
+    clickedClear = false;
+});
+
 let clickedNumber;
 let clickedOperator;
 let displayValue = displayField.textContent;
@@ -93,6 +102,19 @@ operators.forEach(operator => {
 
 function updateDisplay() {
 
+    if (clickedClear) {
+        displayField.textContent = '0';
+        clickedNumber = '';
+        clickedOperator = '';
+        firstClick = true;
+        lastClicked = '';
+        storedValue = '';
+        storedOperator = '';
+        tempValue = '';
+        lastOperator = '';
+        return;
+    }
+
     displayValue = parseFloat(displayField.textContent);
     
     if (clickedNumber === '0' && lastClicked === divide) {
@@ -109,6 +131,10 @@ function updateDisplay() {
     }
 
     if (clickedNumber) {
+
+        if (lastClicked === '=' && lastOperator) {
+            lastOperator = '';
+        }
 
         if (!firstClick && typeof parseFloat(lastClicked) === 'number') {
             displayField.textContent += clickedNumber;

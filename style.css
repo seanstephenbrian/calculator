@@ -1,6 +1,18 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
 html {
     font-size: 100%;
     font-family: 'Helico Centrica', 'Times New Roman', Garamond, serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
 }
 
 @font-face {
@@ -8,18 +20,10 @@ html {
     src: url('helico_centrica/helico-centrica-roman.ttf') format('truetype');
 }
 
-body {
-    width: 100vw;
-    display: flex;
-    flex-direction: column;
-    wrap: wrap;
-    max-height: 100vh;
-}
-
 .header {
     flex: auto;
     gap: 50px;
-    height: 10vh;
+    max-height: 10vh;
     margin-top: 5vh;
     margin-bottom: 50px;
     overflow-wrap: break-word;
@@ -48,11 +52,11 @@ body {
 }
 
 .calc {
-    font-size: 3em;
+    font-size: calc(30px + 6vh);
 }
 
 .calculate {
-    font-size: 3em;
+    font-size: 10vh;
     color: red;
     text-shadow: 5px 5px #20C20E;
 }
@@ -97,10 +101,10 @@ body {
 .input {
     display: flex;
     flex: auto;
+    max-height: 40vh;
     min-height: fit-content;
     gap: 10vw;
-    font-size: 4em;
-    margin-bottom: 30px;
+    font-size: calc(20px + 3.5vh);
     margin-top: 20px;
     margin-left: auto;
     margin-right: auto;
@@ -122,6 +126,7 @@ body {
     text-shadow: 5vh -20vh red;
     font-size: 2em;
     background-color: black;
+    border-radius: 50%;
     color: #20C20E;
     box-shadow: 7px 7px 7px rgb(61, 61, 61);
     font-family: 'Courier New', Courier, monospace;
@@ -142,6 +147,7 @@ body {
     text-shadow: -25vw 0 #20C20E;
     font-size: 3em;
     background-color: black;
+    border-radius: 50%;
     color: red;
     box-shadow: 7px 7px 7px rgb(61, 61, 61);
     font-family: 'Courier New', Courier, monospace;
@@ -152,10 +158,16 @@ body {
 }
 
 .clear-calc {
+    margin-top: 0;
+    padding: 0;
+    margin-bottom: auto;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
-    font-size: 3em;
+    min-height: 10vh;
+    max-height: none;
+    font-size: calc(20px + 5vh);
+    overflow: wrap;
 }
 
 .clear:hover {
