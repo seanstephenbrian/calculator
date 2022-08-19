@@ -10,6 +10,162 @@ html {
     font-family: 'Helico Centrica', 'Times New Roman', Garamond, serif;
 }
 
+/* MOBILE */
+@media only screen and (max-width: 1000px) {
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+@font-face {
+    font-family: 'Helico Centrica';
+    src: url('helico_centrica/helico-centrica-roman.ttf') format('truetype');
+}
+
+.header {
+    flex: auto;
+    gap: 50px;
+    max-height: 10vh;
+    margin-top: 5vh;
+    margin-bottom: 100px;
+    overflow-wrap: break-word;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.header-text {
+    max-width: 40vw;
+    flex: 0 1 0;
+}
+
+.header-img {
+    max-width: 10vw;
+    flex: 0 1 0;
+    display: flex;
+}
+
+.header-img img {
+    flex: auto;
+    min-width: none;
+    min-height: none;
+    height: 100px;
+}
+
+.calc {
+    font-size: calc(30px + 6vh);
+}
+
+.calculate {
+    font-size: 100px;
+    color: red;
+    text-shadow: 5px 5px #20C20E;
+}
+
+.calc , .calculate {
+    animation: blink-animation 1s steps(5, start) infinite;
+    -webkit-animation: blink-animation 1s steps(5, start) infinite;
+}
+
+@keyframes blink-animation {
+    to {
+        visibility: hidden;
+    }
+}
+@-webkit-keyframes blink-animation {
+    to {
+        visibility: hidden;
+    }
+}
+
+.display {
+    display: flex;
+}
+
+.display-field {
+    flex: auto;
+    max-width: 40vw;
+    min-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+    font-size: 4em;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: right;
+    overflow-wrap: break-word;
+    color: #20C20E;
+    background-color: black;
+    box-shadow: 7px 7px 7px rgb(61, 61, 61);
+    text-shadow: 5px 5px rgba(255, 0, 0, 0.363);
+}
+
+.input {
+    display: flex;
+    flex: auto;
+    max-height: 40vh;
+    min-height: fit-content;
+    gap: 10vw;
+    font-size: calc(20px + 3.5vh);
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.numbers {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    column-gap: 1em;
+    row-gap: 0.5em;
+}
+
+.number {
+    text-align: center;
+    text-shadow: 5px 5px #20C20E;
+}
+
+.operators {
+    display: grid;
+    grid-template-columns: auto;
+    text-align: center;
+}
+
+.operator {
+    font-weight: 100;
+    text-shadow: 5px 5px red;
+}
+
+#equals {
+    font-weight: 900;
+}
+
+.clear-calc {
+    margin-top: 0;
+    padding: 0;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    min-height: 10vh;
+    max-height: none;
+    font-size: calc(20px + 5vh);
+    overflow: wrap;
+}
+
+.footer {
+    font-family: Helvetica, sans-serif;
+    font-style: italic;
+    font-weight: 200;
+    font-size: small;
+    margin-top: auto;
+    text-align: center;
+}
+
+}
+
+@media only screen and (min-width: 1000px) {
+
 body {
     display: flex;
     flex-direction: column;
@@ -182,4 +338,6 @@ body {
     font-size: small;
     margin-top: auto;
     text-align: center;
+}
+
 }
