@@ -162,6 +162,12 @@ body {
     text-align: center;
 }
 
+.number:hover,
+.operator:hover,
+.clear:hover {
+    cursor: pointer;
+}
+
 }
 
 
@@ -283,6 +289,12 @@ body {
 .number {
     text-align: center;
     text-shadow: 5px 5px #20C20E;
+}
+
+.number:hover,
+.operator:hover,
+.clear:hover {
+    cursor: pointer;
 }
 
 .number.hover {
