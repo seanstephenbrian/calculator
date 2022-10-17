@@ -1,3 +1,4 @@
+// set up variables for DOM elements:
 const headerText = document.querySelector('.header-text');
 headerText.textContent = 'calc';
 headerText.classList.add('calc');
@@ -23,9 +24,11 @@ headerImg.addEventListener('mouseout', () => {
     headerImg.setAttribute('src','img/calc.png');
 });
 
+// make initial calculator display read '0'
 const displayField = document.querySelector('.display-field');
 displayField.textContent = 0;
 
+// logic for 'clear' button:
 let clickedClear;
 
 const clearCalc = document.querySelector('.clear-calc');
@@ -35,6 +38,7 @@ clearCalc.addEventListener('click', () => {
     clickedClear = false;
 });
 
+// declare global variables for calculator logic:
 let clickedNumber;
 let clickedOperator;
 let displayValue = displayField.textContent;
@@ -45,6 +49,7 @@ let storedOperator;
 let tempValue;
 let lastOperator;
 
+// add event listeners for numbers:
 const numbers = document.querySelectorAll('.number');
 numbers.forEach(number => {
 
@@ -63,11 +68,10 @@ numbers.forEach(number => {
         number.classList.remove('clicked');
         
         updateDisplay();
-
     });
-
 });
 
+// add listeners for operators:
 const operators = document.querySelectorAll('.operator');
 operators.forEach(operator => {
 
@@ -78,7 +82,6 @@ operators.forEach(operator => {
     operator.addEventListener('mouseout', () => {
         operator.classList.remove('hover');
     });
-
 
     operator.addEventListener('click', () => {
 
@@ -96,12 +99,13 @@ operators.forEach(operator => {
         }
         operator.classList.remove('clicked');
         updateDisplay();
-
     });
 });
 
+// main logic of the calculator:
 function updateDisplay() {
 
+    // reset calculator if the user clicks 'clear':
     if (clickedClear) {
         displayField.textContent = '0';
         clickedNumber = '';
@@ -115,8 +119,10 @@ function updateDisplay() {
         return;
     }
 
+    // convert the display to a number and store it in 'displayValue':
     displayValue = parseFloat(displayField.textContent);
     
+    // display an error if the user attempts to divide by 0:
     if (clickedNumber === '0' && lastClicked === divide) {
         displayField.textContent = 'ERROR';
         clickedNumber = '';
@@ -130,6 +136,7 @@ function updateDisplay() {
         return;
     }
 
+    // possible outcomes if the user clicks a number:
     if (clickedNumber) {
 
         if (lastClicked === '=' && lastOperator) {
@@ -160,6 +167,7 @@ function updateDisplay() {
 
     }
 
+    // possible outcomes if user clicks an operator:
     if (clickedOperator) {
 
         if (clickedOperator !== '=') {
@@ -178,19 +186,20 @@ function updateDisplay() {
                 lastOperator = clickedOperator;
             }
     
-            if ( (!lastClicked && !storedOperator) || (lastClicked = 'clear') || (storedOperator && (lastClicked === add || lastClicked === subtract || lastClicked === divide || lastClicked === multiply)) ) {
+            if ( (!lastClicked && !storedOperator) || (lastClicked = 'clear') || (storedOperator && (lastClicked === add || lastClicked === subtract || lastClicked === divide || lastClicked === multiply)) || (!storedOperator && typeof parseFloat(lastClicked) === 'number') ) {
                 storedOperator = clickedOperator;
                 lastOperator = clickedOperator;
             }
     
             // this can be combined with the one above it
-            if (!storedOperator && typeof parseFloat(lastClicked) === 'number') {
-                storedOperator = clickedOperator;
-                lastOperator = clickedOperator;
-            }
+            // if (!storedOperator && typeof parseFloat(lastClicked) === 'number') {
+            //     storedOperator = clickedOperator;
+            //     lastOperator = clickedOperator;
+            // }
 
         }
 
+        // if the user clicks equals...
         if (clickedOperator === '=') {
 
             if (clickedOperator === '=' && storedOperator && storedValue) {
@@ -209,11 +218,13 @@ function updateDisplay() {
     
         }
 
+        // make the just-clicked operator the new 'lastClicked', then clear out the 'clickedOperator' variable:
         lastClicked = clickedOperator;
         clickedOperator = '';
-
     }        
 }
+
+// mathematical functions:
 
 function add(x, y) {
     return x + y;
