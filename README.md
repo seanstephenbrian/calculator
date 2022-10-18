@@ -1,5 +1,7 @@
 I created this calculator as my final project for the Foundations section of the Odin Project curriculum.
 
+Live version: https://seanstephenbrian.github.io/calculator/
+
 The central challenge was to code the logic of the calculator in JavaScript without simply evaluating a provided expression. 
 I created a set of variables to hold a stored value and track various critical pieces of information, such as the last-clicked key,
 the last-used operator, etc. 'Click' event listeners on the numbers and operators trigger the central function, updateDisplay(),
